@@ -20,6 +20,4 @@ public class Permission {
     private int numberOfDays;
     private Date startDate;
     private Date endDate;
-
-
 }

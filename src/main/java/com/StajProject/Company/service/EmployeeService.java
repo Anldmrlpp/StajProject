@@ -1,17 +1,18 @@
 package com.StajProject.Company.service;
 
-import com.StajProject.Company.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.StajProject.Company.dto.EmployeeCreateDto;
+import com.StajProject.Company.dto.EmployeeDto;
+import com.StajProject.Company.dto.EmployeeUpdateDto;
 
-@Service
-public class EmployeeService {
-    @Autowired
-    public EmployeeRepository employeeRepository;
+import java.util.List;
+import java.util.UUID;
 
-        public Long createEmployee(){
-            return null;
-        }
+public interface EmployeeService {
+
+    UUID createEmployee(EmployeeCreateDto employeeCreateDto);
+    EmployeeDto getEmployee(String email);
+    EmployeeDto updateEmployee(String email, EmployeeUpdateDto employeeUpdateDto);
+    Boolean deleteEmployee(String email);
 
 
 }
