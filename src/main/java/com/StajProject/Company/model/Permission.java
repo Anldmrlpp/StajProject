@@ -1,23 +1,31 @@
 package com.StajProject.Company.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.UUID;
 
+@NoArgsConstructor
 @Entity
 @Data
+@Table(name = "permission_data", schema = "util_sch")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Permission {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
 
-    private Long employeeId;
-    private String type;
+    @Column(name = "employee_id")
+    private UUID employeeId;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "number_of_days")
     private int numberOfDays;
-    private Date startDate;
-    private Date endDate;
+    @Column(name = "start_date")
+    private LocalDate startDate;
+    @Column(name = "end_date")
+    private LocalDate endDate;
 }

@@ -8,8 +8,6 @@ public class ErrorMessages {
 
     public static final String EMPLOYEE_NOT_FOUND = "Employee Not Found!";
 
-    public static final String EMAIL_NOT_FOUND = "Email Not Found!";
-
-    public static final String INCORRECT_LOGIN = "Incorrect Email or Password Entry";
+    public static final String DONT_HAVE_ENOUGH_PERMISSION = "You don't have enough permission days";
 
 }

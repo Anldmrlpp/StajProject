@@ -14,7 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,8 +22,8 @@ import java.util.UUID;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final EmployeeRepository employeeRepository;
-    private final EmployeeMapper employeeMapper;
+    private final EmployeeRepository employeeRepository;//EmployeeRepository interface'ini kullanarak veritabanı işlemlerini geçekleştiririm.
+    private final EmployeeMapper employeeMapper; //EmployeeMapper interface'ini kullanarak Employee ve Employee Dto arasında dönüşüm işlemleri.
 
     @Override
     public UUID createEmployee(EmployeeCreateDto employeeCreateDto) {
@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto getEmployee(String email) {
+    public EmployeeDto getEmployee(String email) { //emaile ait çalısan var mı yok mu? yoksa permissionexception.
 
         Optional<Employee> existEmployee = employeeRepository.findByEmail(email);
 
@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMPLOYEE_NOT_FOUND);
         }
         System.out.println(existEmployee.get());
-        return employeeMapper.toDto(existEmployee.get());
+        return employeeMapper.toDto(existEmployee.get()); //bulunursa email employeeDto olarak döndürürüm.
 
     }
 
