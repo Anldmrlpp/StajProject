@@ -10,4 +10,7 @@ public class ErrorMessages {
 
     public static final String DONT_HAVE_ENOUGH_PERMISSION = "You don't have enough permission days";
 
+    public static final String PERMISSION_NOT_FOUND = "Permission Not Found!";
+
+    public static final String PERMISSION_NOT_FOUND_FOR_EMPLOYEE = "Permission not found for this employee!";
 }

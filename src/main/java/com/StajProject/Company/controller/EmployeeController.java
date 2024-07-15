@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -36,6 +37,10 @@ public class EmployeeController implements EmployeeApi {
     @Override
     public ResponseEntity<Boolean> deleteEmployee(String email) {
         return ResponseEntity.ok(service.deleteEmployee(email));
+    }
+    @Override
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees(){
+        return ResponseEntity.ok(service.getAllEmployees());
     }
 
 }

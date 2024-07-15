@@ -96,7 +96,7 @@ public interface PermissionApi {
             @ApiResponse(responseCode = "405", description = "Method Not Allowed", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @DeleteMapping(value = "/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/employee/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Boolean> deletePermissionsForEmployee(@PathVariable UUID employeeId);
 
 }

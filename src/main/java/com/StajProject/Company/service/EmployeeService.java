@@ -4,6 +4,7 @@ import com.StajProject.Company.dto.EmployeeCreateDto;
 import com.StajProject.Company.dto.EmployeeDto;
 import com.StajProject.Company.dto.EmployeeUpdateDto;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface EmployeeService {
@@ -12,6 +13,7 @@ public interface EmployeeService {
     EmployeeDto getEmployee(String email);
     EmployeeDto updateEmployee(String email, EmployeeUpdateDto employeeUpdateDto);
     Boolean deleteEmployee(String email);
+    List<EmployeeDto> getAllEmployees();
 
-    //Calısanlar bulunamazsa PermissionException fırlatırız
+    //Calısanlar bulunamazsa PermissionException fırlatılır.
 }

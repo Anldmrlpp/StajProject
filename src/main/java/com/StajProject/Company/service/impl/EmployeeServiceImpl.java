@@ -14,7 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,64 +22,88 @@ import java.util.UUID;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final EmployeeRepository employeeRepository;//EmployeeRepository interface'ini kullanarak veritabanı işlemlerini geçekleştiririm.
-    private final EmployeeMapper employeeMapper; //EmployeeMapper interface'ini kullanarak Employee ve Employee Dto arasında dönüşüm işlemleri.
+    private final EmployeeRepository employeeRepository; // EmployeeRepository arayüzü, veritabanı işlemleri için kullanıldı.
+    private final EmployeeMapper employeeMapper; // EmployeeMapper arayüzü, Employee ve EmployeeDto dönüşümlerini sağladı.
 
     @Override
     public UUID createEmployee(EmployeeCreateDto employeeCreateDto) {
+        // Yeni bir Employee nesnesi oluşturuldu ve employeeCreateDto'dan gelen veriler kopyalandı.
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeCreateDto, employee);
+
+        // Yeni çalışanın varsayılan izin bakiyesi 15 olarak ayarlandı.
         employee.setLeaveBalance(15);
 
-        Employee response = employeeRepository.save(employee);
+        // Oluşturulan Employee nesnesi veritabanına kaydedildi.
+        Employee savedEmployee = employeeRepository.save(employee);
 
-        return response.getId();
+        // Kaydedilen çalışanın kimliği (id) döndürüldü.
+        return savedEmployee.getId();
     }
 
     @Override
-    public EmployeeDto getEmployee(String email) { //emaile ait çalısan var mı yok mu? yoksa permissionexception.
-
+    public EmployeeDto getEmployee(String email) {
+        // Verilen e-posta adresine sahip çalışanın veritabanında varlığı kontrol edildi.
         Optional<Employee> existEmployee = employeeRepository.findByEmail(email);
 
-        if(existEmployee.isEmpty()) {
+        // Eğer çalışan bulunamazsa PermissionException fırlatılır mesajı verildi.
+        if (existEmployee.isEmpty()) {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMPLOYEE_NOT_FOUND);
         }
-        System.out.println(existEmployee.get());
-        return employeeMapper.toDto(existEmployee.get()); //bulunursa email employeeDto olarak döndürürüm.
 
+        // Bulunan çalışan EmployeeDto'ya dönüştürülerek döndürüldü.
+        return employeeMapper.toDto(existEmployee.get());
     }
 
     @Override
     public EmployeeDto updateEmployee(String email, EmployeeUpdateDto employeeUpdateDto) {
+        // Verilen e-posta adresine sahip çalışanın varlığı kontrol edildi.
         Optional<Employee> existResponse = employeeRepository.findByEmail(email);
 
-        if(existResponse.isPresent()) {
+        // Eğer çalışan bulunursa güncelleme işlemi yapıldı.
+        if (existResponse.isPresent()) {
             Employee existEmployee = existResponse.get();
+
+            // Yeni verilerle mevcut çalışan nesnesi güncellendi.
             BeanUtils.copyProperties(employeeUpdateDto, existEmployee);
 
-            Employee response = employeeRepository.save(existEmployee);
+            // Güncellenmiş çalışan veritabanına kaydedildi.
+            Employee updatedEmployee = employeeRepository.save(existEmployee);
 
-            return employeeMapper.toDto(response);
-        }
-        else {
+            // Güncellenmiş çalışan EmployeeDto'ya dönüştürülerek döndürüldü.
+            return employeeMapper.toDto(updatedEmployee);
+        } else {
+            // Eğer çalışan bulunamazsa PermissionException fırlatıldı.
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMPLOYEE_NOT_FOUND);
         }
-
     }
 
     @Override
     public Boolean deleteEmployee(String email) {
+        // Verilen e-posta adresine sahip çalışanın varlığını kontrol edildi.
         Optional<Employee> existResponse = employeeRepository.findByEmail(email);
 
-        if(existResponse.isEmpty()) {
+        // Eğer çalışan bulunursa silme işlemi yapıldı.
+        if (existResponse.isEmpty()) {
+            // Eğer çalışan bulunamazsa PermissionException fırlatıldı.
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMPLOYEE_NOT_FOUND);
         }
 
+        // Silinecek çalışan nesnesi elde edildi.
         Employee existEmployee = existResponse.get();
+
+        // Çalışan veritabanından silindi.
         employeeRepository.delete(existEmployee);
 
+        // İşlem başarılı olduğunda true döndürüldü.
         return true;
     }
 
+    public List<EmployeeDto> getAllEmployees() {
+        // Tüm çalışanlar veritabanından alındı.
+        List<Employee> existEmployees = employeeRepository.findAll();
 
+        // Tüm çalışanlar EmployeeDto listesine dönüştürülerek döndürüldü.
+        return employeeMapper.toDtoList(existEmployees);
+    }
 }
