@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-public class EmployeeController implements EmployeeApi {
+public class EmployeeController implements EmployeeApi { //EmployeeApi arayüzündeki metotları gerçekleştirerek çalışanlarla ilgili işlemler yürütüldü.
 
     private final EmployeeService service;
 

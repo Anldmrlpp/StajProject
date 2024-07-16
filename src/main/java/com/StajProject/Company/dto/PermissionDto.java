@@ -3,7 +3,7 @@ package com.StajProject.Company.dto;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record PermissionDto(
+public record PermissionDto(// Bir izin talebinin tüm bilgileri yazıldı.
         UUID id,
         UUID employeeId,
         String description,

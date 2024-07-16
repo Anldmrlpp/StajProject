@@ -20,7 +20,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "/api/v1/permissions")
 @Validated
-public interface PermissionApi {
+public interface PermissionApi { //Permission ile ilgili CRUD işlemlerini gerçekleştiren REST API noktaları.
 
     @Operation(operationId = "CreatePermission", summary = "Create permission.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = Boolean.class))),

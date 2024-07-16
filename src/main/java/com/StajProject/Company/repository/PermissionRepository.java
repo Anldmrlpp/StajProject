@@ -11,5 +11,6 @@ import java.util.UUID;
 
 @Repository
 public interface PermissionRepository extends JpaRepository<Permission, UUID> {
+    //Permission varlıkları üzerinde CRUD işlemlerini gerçekleştirmek için yazıldı.
     List<Permission> findByEmployeeId(UUID id);
 }

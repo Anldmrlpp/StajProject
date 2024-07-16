@@ -1,6 +1,6 @@
 package com.StajProject.Company.exception;
 
-public class ErrorMessages {
+public class ErrorMessages { //Hata mesajlarını tanımlanır.
 
     private ErrorMessages(){}
 
@@ -13,4 +13,8 @@ public class ErrorMessages {
     public static final String PERMISSION_NOT_FOUND = "Permission Not Found!";
 
     public static final String PERMISSION_NOT_FOUND_FOR_EMPLOYEE = "Permission not found for this employee!";
+
+    public static final String ADMIN_NOT_FOUND = "Admin Not Found";
+
+    public static final String EMAIL_NOT_FOUND = "Email Not Found";
 }

@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface PermissionMapper extends BaseMapper<Permission, PermissionDto> {
-
+//Permission ile PermissionDto arasında dönüşüm yapıldı
 
 
 }

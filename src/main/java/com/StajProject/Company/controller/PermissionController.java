@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-public class PermissionController implements PermissionApi {
+public class PermissionController implements PermissionApi { //PermissionController da ise izinlerle ilgili işlemler yürütüldü.
     private final PermissionService permissionService;
 
     @Override

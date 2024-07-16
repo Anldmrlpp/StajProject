@@ -19,6 +19,7 @@ import java.util.Objects;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
 public class PermissionExceptionHandler extends ResponseEntityExceptionHandler {
+    //Uygulamadaki izinle ilgili ve genel hatalar yakalandı ve uygun HTTP yanıtları dönüldü.
 
     private static final String TIMESTAMP = "timestamp";
 

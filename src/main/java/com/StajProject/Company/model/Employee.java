@@ -12,7 +12,7 @@ import java.util.UUID;
 @Data
 @Table(name = "employee_data", schema = "util_sch")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Employee {
+public class Employee { //çalışanların bilgilerini tutmak için yazıldı , employee_data tablosu ile eşleştirildi.
     @Id
     @GeneratedValue
     private UUID id;

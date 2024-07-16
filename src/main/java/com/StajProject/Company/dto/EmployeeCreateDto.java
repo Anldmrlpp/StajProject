@@ -1,6 +1,6 @@
 package com.StajProject.Company.dto;
 
-public record EmployeeCreateDto(
+public record EmployeeCreateDto( //Yeni bir çalışan oluşturmak için gereken bilgiler görüntülendi.
         String firstName,
         String lastName,
         String email,

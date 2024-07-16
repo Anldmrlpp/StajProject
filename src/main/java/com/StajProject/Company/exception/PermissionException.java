@@ -13,7 +13,7 @@ import static com.StajProject.Company.exception.ErrorMessages.DEFAULT_ERROR_MESS
 
 @Getter
 @Setter
-public class PermissionException extends RuntimeException implements Serializable { //sınıfın serileşebilir olması
+public class PermissionException extends RuntimeException implements Serializable { //Sınıfın serileşebilir olması durumu.
 
     private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,9 @@ public class PermissionException extends RuntimeException implements Serializabl
         this.detail = errorDetail;
     }
 
-    public static PermissionException withStatusAndThrowable(HttpStatus status, Throwable throwable){ //fabrika metodları
+    //üç metod, belirli hata senaryolarına uygun PermissionException nesneleri yaratmak için kullanıldı.
+
+    public static PermissionException withStatusAndThrowable(HttpStatus status, Throwable throwable){
         return new PermissionException(status, throwable);
     }
 

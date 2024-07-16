@@ -7,7 +7,7 @@ import com.StajProject.Company.dto.EmployeeUpdateDto;
 import java.util.List;
 import java.util.UUID;
 
-public interface EmployeeService {
+public interface EmployeeService { //çalışanlarla ilgili işlemler tanımlandı.
 
     UUID createEmployee(EmployeeCreateDto employeeCreateDto);
     EmployeeDto getEmployee(String email);

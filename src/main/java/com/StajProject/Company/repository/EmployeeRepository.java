@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
-
+    //Employee varlıkları üzerinde CRUD işlemlerini gerçekleştirmek için yazıldı.
     Optional<Employee> findByEmail(String email);
 
 }
