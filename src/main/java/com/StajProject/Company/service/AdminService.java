@@ -5,7 +5,6 @@ import com.StajProject.Company.dto.AdminDto;
 import com.StajProject.Company.dto.AdminUpdateDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface AdminService {
     AdminDto signUpAdmin(AdminCreateDto adminCreateDto);
