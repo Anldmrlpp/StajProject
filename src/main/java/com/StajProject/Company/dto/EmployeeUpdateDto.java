@@ -1,8 +1,13 @@
 package com.StajProject.Company.dto;
 
-public record EmployeeUpdateDto( // Mevcut bir çalışanın bilgilerini güncellemek için yazıldı.
+import jakarta.validation.constraints.NotNull;
+
+public record EmployeeUpdateDto(
+        @NotNull
         String firstName,
+        @NotNull
         String lastName,
+        @NotNull
         String department
 ) {
 }
