@@ -46,7 +46,7 @@ public interface PermissionApi { //Permission ile ilgili CRUD işlemlerini gerç
             @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<PermissionDto> getPermission(@PathVariable UUID id);
 
     @Operation(operationId = "getPermissionsForEmployee", summary = "Get permissions for employee.")
@@ -59,7 +59,7 @@ public interface PermissionApi { //Permission ile ilgili CRUD işlemlerini gerç
             @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @GetMapping(value = "/employee/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get/employee/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<PermissionDto>> getPermissionsForEmployee(@PathVariable UUID employeeId);
 
     @Operation(operationId = "updatePermission", summary = "Update permission.")
@@ -72,7 +72,7 @@ public interface PermissionApi { //Permission ile ilgili CRUD işlemlerini gerç
             @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<PermissionDto> updatePermission(@PathVariable UUID id, @RequestBody PermissionUpdateDto permissionUpdateDto);
 
     @Operation(operationId = "deletePermission", summary = "Delete permission.")
@@ -84,7 +84,7 @@ public interface PermissionApi { //Permission ile ilgili CRUD işlemlerini gerç
             @ApiResponse(responseCode = "405", description = "Method Not Allowed", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Boolean> deletePermission(@PathVariable UUID id);
 
     @Operation(operationId = "deletePermissionsForEmployee", summary = "Delete permissions for employee.")
@@ -96,7 +96,7 @@ public interface PermissionApi { //Permission ile ilgili CRUD işlemlerini gerç
             @ApiResponse(responseCode = "405", description = "Method Not Allowed", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @DeleteMapping(value = "/employee/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/delete/employee/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Boolean> deletePermissionsForEmployee(@PathVariable UUID employeeId);
 
 }

@@ -49,7 +49,7 @@ public interface EmployeeApi { //REST API için bir interface tanımlaması içe
             @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="/get", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<EmployeeDto> getEmployee(@RequestParam String email);
 
     @Operation(operationId = "updateEmployee", summary = "Update employee.")
@@ -62,7 +62,7 @@ public interface EmployeeApi { //REST API için bir interface tanımlaması içe
             @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @PutMapping(value = "/{email}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update/{email}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<EmployeeDto> updateEmployee(@PathVariable String email, @RequestBody @Valid EmployeeUpdateDto employeeUpdateDto);
 
     @Operation(operationId = "deleteEmployee", summary = "Delete employee.")
@@ -74,7 +74,7 @@ public interface EmployeeApi { //REST API için bir interface tanımlaması içe
             @ApiResponse(responseCode = "405", description = "Method Not Allowed", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @DeleteMapping(value = "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/delete/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Boolean> deleteEmployee(@PathVariable String email);
 
     @Operation(operationId = "getAllEmployees",summary = "Get all employees !")

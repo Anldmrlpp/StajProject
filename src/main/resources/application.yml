@@ -3,5 +3,5 @@ spring:
     name: Company
   profiles:
     active: local
-    ##İlk once application.yml i çalıstırır.##
+
 

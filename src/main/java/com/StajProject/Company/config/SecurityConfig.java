@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,7 +28,8 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/docs/swagger-ui/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            "docs/swagger-ui/index.html"
     };
 
     private static final String[] PERMIT_ALL_ENDPOINTS = {
@@ -55,8 +57,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(registry ->{
-                    registry.requestMatchers(AUTH_WHITELIST).permitAll();
+                .authorizeHttpRequests(registry -> {
+                    registry.requestMatchers(AUTH_WHITELIST).permitAll(); // Swagger UI'yi izinli hale getir
                     registry.requestMatchers(PERMIT_ALL_ENDPOINTS).permitAll();
                     registry.requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN");
                     registry.anyRequest().authenticated();
@@ -69,6 +71,9 @@ public class SecurityConfig {
                 )
                 .build();
     }
+
+
+
 
     @Bean
     public UserDetailsService userDetailsService() {

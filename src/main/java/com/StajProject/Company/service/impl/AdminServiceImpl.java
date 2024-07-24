@@ -22,10 +22,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
-    private AdminRepository repository;
-    private AdminMapper mapper;
-    private PasswordEncoder passwordEncoder;
-
+    private final AdminRepository repository;
+    private final AdminMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public AdminDto signUpAdmin(AdminCreateDto adminCreateDto) {
@@ -36,7 +35,6 @@ public class AdminServiceImpl implements AdminService {
         Admin response = repository.save(admin);
 
         return mapper.toDto(response);
-
     }
 
     @Override

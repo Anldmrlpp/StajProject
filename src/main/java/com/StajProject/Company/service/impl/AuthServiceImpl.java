@@ -4,8 +4,8 @@ import com.StajProject.Company.exception.ErrorMessages;
 import com.StajProject.Company.exception.PermissionException;
 import com.StajProject.Company.model.Admin;
 import com.StajProject.Company.repository.AdminRepository;
+import com.StajProject.Company.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,14 +15,16 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class AuthServiceImp {
-    private AdminRepository repository;
+public class AuthServiceImpl implements AuthService {
 
-    //Login işlemi
-    public UserDetails loadUserByUsername (String email) throws UsernameNotFoundException {
+    private final AdminRepository repository;
+
+    // Login Process
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Admin> response = repository.findByEmail(email);
 
-        if (response.isPresent()) {
+        if(response.isPresent()) {
             Admin existAdmin = response.get();
 
             return org.springframework.security.core.userdetails.User.builder()
@@ -35,6 +37,5 @@ public class AuthServiceImp {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMAIL_NOT_FOUND);
         }
     }
-
 
 }
