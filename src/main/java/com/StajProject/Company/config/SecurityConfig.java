@@ -29,16 +29,26 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/docs/swagger-ui/**",
             "/swagger-ui.html",
-            "docs/swagger-ui/index.html"
+            "/docs/swagger-ui/index.html"
     };
 
     private static final String[] PERMIT_ALL_ENDPOINTS = {
             "/api/v1/employee",
+            "/api/v1/employee/signup",
+            "/api/v1/employee/login/{email}",
             "/api/v1/employee/get",
             "/api/v1/employee/allEmployees",
             "/api/v1/permissions/get/{id}",
             "/api/v1/permissions/get/employee/{employeeId}",
-            "/api/v1/admins"
+            "/api/v1/admins",
+            "/api/v1/admins/signup",
+            "/api/v1/admins/login/{email}",
+            "/api/v1/admins/get"
+    };
+
+    public static final String[] USER_ENDPOINTS = {
+            "/api/v1/employee/update/{id}",
+            "/api/v1/employee/delete/{id}"
     };
 
     private static final String[] ADMIN_ENDPOINTS = {
@@ -48,9 +58,6 @@ public class SecurityConfig {
             "/api/v1/permissions/update/{id}",
             "/api/v1/permissions/delete/{id}",
             "/api/v1/permissions/delete/employee/{employeeId}",
-            "/api/v1/admins/get",
-            "/api/v1/admins/update/{email}",
-            "/api/v1/admins/delete/{email}"
     };
 
     @Bean
@@ -60,6 +67,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers(AUTH_WHITELIST).permitAll(); // Swagger UI'yi izinli hale getir
                     registry.requestMatchers(PERMIT_ALL_ENDPOINTS).permitAll();
+                    registry.requestMatchers(USER_ENDPOINTS).hasAnyRole("USER" , "ADMIN");
                     registry.requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN");
                     registry.anyRequest().authenticated();
                 })

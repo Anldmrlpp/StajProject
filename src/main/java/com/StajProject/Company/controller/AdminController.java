@@ -23,6 +23,11 @@ public class AdminController implements AdminApi {
     }
 
     @Override
+    public ResponseEntity<AdminDto> loginAdmin(String email, String password) {
+        return ResponseEntity.ok(service.loginAdmin(email,password));
+    }
+
+    @Override
     public ResponseEntity<List<AdminDto>> getAdmins() {
         return ResponseEntity.ok(service.getAdmins());
     }

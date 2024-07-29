@@ -10,6 +10,7 @@ import com.StajProject.Company.model.Admin;
 import com.StajProject.Company.repository.AdminRepository;
 import com.StajProject.Company.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,9 @@ public class AdminServiceImpl implements AdminService {
     private final AdminMapper mapper;
     private final PasswordEncoder passwordEncoder;
 
+
+    private String adminKey;
+
     @Override
     public AdminDto signUpAdmin(AdminCreateDto adminCreateDto) {
         Admin admin = new Admin();
@@ -36,10 +40,30 @@ public class AdminServiceImpl implements AdminService {
 
         return mapper.toDto(response);
     }
+    public AdminDto loginAdmin(String email, String password){
+        Optional<Admin> admin = repository.findByEmail(email);
+
+        if (admin.isPresent()){
+            Admin existAdmin = admin.get();
+
+            if (passwordEncoder.matches(password,existAdmin.getPassword())){
+                return mapper.toDto(existAdmin);
+            }
+            else {
+                throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.INCORRECT_LOGIN);
+            }
+        }
+
+        else {
+            throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.ADMIN_NOT_FOUND);
+        }
+    }
 
     @Override
     public List<AdminDto> getAdmins() {
+        System.out.println(adminKey);
         return mapper.toDtoList(repository.findAll());
+
     }
 
     @Override

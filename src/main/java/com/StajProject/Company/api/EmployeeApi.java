@@ -36,8 +36,23 @@ public interface EmployeeApi { //REST API için bir interface tanımlaması içe
             @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<UUID> createEmployee(@RequestBody @Valid EmployeeCreateDto employeeCreateDto);
+    @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<UUID> signUpEmployee(@RequestBody @Valid EmployeeCreateDto employeeCreateDto);
+
+    @Operation(operationId = "loginEmployee", summary = "Login employee.")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = EmployeeDto.class))),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "405", description = "Method Not Allowed", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
+    })
+
+    @GetMapping(value = "/login/{email}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<EmployeeDto> loginEmployee (@PathVariable String email, @RequestParam String password);
+
 
     @Operation(operationId = "getEmployee", summary = "Get employee.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = EmployeeDto.class))),
@@ -62,8 +77,10 @@ public interface EmployeeApi { //REST API için bir interface tanımlaması içe
             @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @PutMapping(value = "/update/{email}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<EmployeeDto> updateEmployee(@PathVariable String email, @RequestBody @Valid EmployeeUpdateDto employeeUpdateDto);
+    @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<EmployeeDto> updateEmployee(@PathVariable UUID id, @RequestBody @Valid EmployeeUpdateDto employeeUpdateDto);
+
+    ResponseEntity<EmployeeDto> updateEmployee(String email, EmployeeUpdateDto employeeUpdateDto);
 
     @Operation(operationId = "deleteEmployee", summary = "Delete employee.")
     @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "No Content"),
@@ -74,8 +91,10 @@ public interface EmployeeApi { //REST API için bir interface tanımlaması içe
             @ApiResponse(responseCode = "405", description = "Method Not Allowed", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @DeleteMapping(value = "/delete/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Boolean> deleteEmployee(@PathVariable String email);
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Boolean> deleteEmployee(@PathVariable UUID id);
+
+    ResponseEntity<Boolean> deleteEmployee(String email);
 
     @Operation(operationId = "getAllEmployees",summary = "Get all employees !")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = EmployeeDto.class))),

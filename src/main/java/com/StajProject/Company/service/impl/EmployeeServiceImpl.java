@@ -8,10 +8,12 @@ import com.StajProject.Company.exception.PermissionException;
 import com.StajProject.Company.mapper.EmployeeMapper;
 import com.StajProject.Company.model.Employee;
 import com.StajProject.Company.repository.EmployeeRepository;
+import com.StajProject.Company.service.AuthService;
 import com.StajProject.Company.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,21 +26,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository; // EmployeeRepository arayüzü, veritabanı işlemleri için kullanıldı.
     private final EmployeeMapper employeeMapper; // EmployeeMapper arayüzü, Employee ve EmployeeDto dönüşümlerini sağladı.
+    private final PasswordEncoder passwordEncoder;
+    private final AuthService authService;
 
     @Override
-    public UUID createEmployee(EmployeeCreateDto employeeCreateDto) {
+    public UUID signUpEmployee(EmployeeCreateDto employeeCreateDto) {
         // Yeni bir Employee nesnesi oluşturuldu ve employeeCreateDto'dan gelen veriler kopyalandı.
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeCreateDto, employee);
+
+        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
 
         // Yeni çalışanın varsayılan izin bakiyesi 15 olarak ayarlandı.
         employee.setLeaveBalance(15);
 
         // Oluşturulan Employee nesnesi veritabanına kaydedildi.
-        Employee savedEmployee = employeeRepository.save(employee);
+        Employee response = employeeRepository.save(employee);
 
         // Kaydedilen çalışanın kimliği (id) döndürüldü.
-        return savedEmployee.getId();
+        return response.getId();
+    }
+
+    @Override
+    public EmployeeDto loginEmployee(String email, String password) {
+        Optional<Employee> employee = employeeRepository.findByEmail(email);
+
+        if (employee.isPresent()) {
+            Employee existingEmployee = employee.get();
+            if (passwordEncoder.matches(password, existingEmployee.getPassword())) {
+                return employeeMapper.toDto(existingEmployee);
+            }
+            else {
+                throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.INCORRECT_LOGIN);
+            }
+        }
+        else {
+            throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMPLOYEE_NOT_FOUND);
+        }
     }
 
     @Override
@@ -56,9 +80,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto updateEmployee(String email, EmployeeUpdateDto employeeUpdateDto) {
+    public EmployeeDto updateEmployee(UUID id, EmployeeUpdateDto employeeUpdateDto) {
         // Verilen e-posta adresine sahip çalışanın varlığı kontrol edildi.
-        Optional<Employee> existResponse = employeeRepository.findByEmail(email);
+        if(!authService.verifyUserIdMatchesAuthenticatedUser(id)) {
+            throw PermissionException.withStatusAndMessage(HttpStatus.FORBIDDEN, ErrorMessages.UNAUTHORIZED);
+        }
+        Optional<Employee> existResponse = employeeRepository.findByEmail(id);
 
         // Eğer çalışan bulunursa güncelleme işlemi yapıldı.
         if (existResponse.isPresent()) {
@@ -66,6 +93,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
             // Yeni verilerle mevcut çalışan nesnesi güncellendi.
             BeanUtils.copyProperties(employeeUpdateDto, existEmployee);
+
+            existEmployee.setPassword(passwordEncoder.encode(existEmployee.getPassword()));
 
             // Güncellenmiş çalışan veritabanına kaydedildi.
             Employee updatedEmployee = employeeRepository.save(existEmployee);
@@ -79,9 +108,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Boolean deleteEmployee(String email) {
+    public Boolean deleteEmployee(UUID id) {
+
+        if(!authService.verifyUserIdMatchesAuthenticatedUser(id)) {
+            throw PermissionException.withStatusAndMessage(HttpStatus.FORBIDDEN, ErrorMessages.UNAUTHORIZED);
+        }
         // Verilen e-posta adresine sahip çalışanın varlığını kontrol edildi.
-        Optional<Employee> existResponse = employeeRepository.findByEmail(email);
+        Optional<Employee> existResponse = employeeRepository.findByEmail(id);
 
         // Eğer çalışan bulunursa silme işlemi yapıldı.
         if (existResponse.isEmpty()) {

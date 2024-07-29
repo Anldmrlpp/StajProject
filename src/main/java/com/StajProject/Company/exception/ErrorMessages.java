@@ -17,4 +17,8 @@ public class ErrorMessages { //Hata mesajlarını tanımlanır.
     public static final String ADMIN_NOT_FOUND = "Admin Not Found";
 
     public static final String EMAIL_NOT_FOUND = "Email Not Found";
+
+    public static final String UNAUTHORIZED = "UNAUTHORIZED";
+
+    public static final String INCORRECT_LOGIN = "Incorrect Email or Password Entry";
 }

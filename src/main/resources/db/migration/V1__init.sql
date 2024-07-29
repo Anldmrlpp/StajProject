@@ -7,7 +7,14 @@ CREATE TABLE IF NOT EXISTS util_sch.employee_data
     first_name                 VARCHAR NOT NULL,
     last_name                  VARCHAR NOT NULL,
     email                      VARCHAR NOT NULL UNIQUE,
-    department                 VARCHAR NOT NULL,
-    leave_balance               INT NOT NULL,
+    password                   VARCHAR NOT NULL,
+    image_url                  VARCHAR UNIQUE,
+    biography                  VARCHAR,
+    phone_number               VARCHAR,
+    department                 VARCHAR,
+    birthday                   DATE,
+    leave_balance              INT NOT NULL,
+    created_date               DATE NOT NULL,
+    updated_date               DATE NOT NULL,
     PRIMARY KEY (id)
 );

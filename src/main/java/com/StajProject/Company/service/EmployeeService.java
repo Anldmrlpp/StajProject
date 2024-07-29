@@ -11,9 +11,18 @@ public interface EmployeeService { //çalışanlarla ilgili işlemler tanımland
 
     UUID createEmployee(EmployeeCreateDto employeeCreateDto);
     EmployeeDto getEmployee(String email);
+    EmployeeDto updateEmployee(UUID id, EmployeeUpdateDto employeeUpdateDto);
+    Boolean deleteEmployee(UUID id);
+
     EmployeeDto updateEmployee(String email, EmployeeUpdateDto employeeUpdateDto);
+
     Boolean deleteEmployee(String email);
+
     List<EmployeeDto> getAllEmployees();
+
+    UUID signUpEmployee(EmployeeCreateDto employeeCreateDto);
+
+    EmployeeDto loginEmployee(String email, String password);
 
     //Calısanlar bulunamazsa PermissionException fırlatılır.
 }

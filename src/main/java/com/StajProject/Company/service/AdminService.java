@@ -11,4 +11,6 @@ public interface AdminService {
     List<AdminDto> getAdmins();
     AdminDto updateAdmin(String email, AdminUpdateDto adminUpdateDto);
     Boolean deleteAdmin(String email);
- }
+
+    AdminDto loginAdmin(String email, String password);
+}

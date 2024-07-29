@@ -17,6 +17,7 @@ spring:
       max-size: 10
 
 
+
 ## OpenApi Settings ##
 springdoc:
   swagger-ui:
