@@ -63,10 +63,6 @@ public interface AdminApi {
     @GetMapping(value = "/get/admin/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<AdminDto> getAdmin(@PathVariable String email);
 
-    ResponseEntity<AdminDto> signUpAdmin(AdminCreateDto adminCreateDto);
-
-    ResponseEntity<AdminDto> loginAdmin(String email, String password);
-
     @Operation(operationId = "getAdmins", summary = "Get admins.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = AdminDto.class))),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = Error.class))),
@@ -105,7 +101,4 @@ public interface AdminApi {
     @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Boolean> deleteAdmin(@RequestHeader String key, @PathVariable UUID id);
 
-    ResponseEntity<AdminDto> updateAdmin(String email, AdminUpdateDto adminUpdateDto);
-
-    ResponseEntity<Boolean> deleteAdmin(String email);
 }

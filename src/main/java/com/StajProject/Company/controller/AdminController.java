@@ -1,4 +1,4 @@
-package com.StajProject.Company.controller;
+package com.StajProje.Company.controller;
 
 import com.StajProject.Company.api.AdminApi;
 import com.StajProject.Company.dto.AdminCreateDto;

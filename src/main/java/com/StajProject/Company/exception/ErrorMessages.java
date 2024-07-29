@@ -23,4 +23,12 @@ public class ErrorMessages { //Hata mesajlarını tanımlanır.
     public static final String INCORRECT_LOGIN = "Incorrect Email or Password Entry";
 
     public static final String WRONG_ADMIN_KEY = "Wrong Admin Key. You Are Not Admin";
+
+    public static final String FILE_NOT_FOUND = "File Not Found!";
+
+    public static final String FILE_CANNOT_DELETE = "An error occurred while deleting the file!";
+
+    public static final String FILE_CANNOT_WRITE = "An error occurred while uploading the file!";
+
+    public static final String UNSUPPORTED_FILE_TYPE = "Unsupported file. Only PNG, JPEG, JPG, MP3, MP4, PDF and CSV supported";
 }

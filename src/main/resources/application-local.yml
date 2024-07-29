@@ -5,7 +5,6 @@ server:
     connection-timeout: 2s
     idle-timeout: 15s
 
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/company_permission
@@ -15,8 +14,18 @@ spring:
       max-create-connection-time: 2s
       initial-size: 5
       max-size: 10
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
 
-
+## FILE ##
+file:
+  allowed-formats: png, jpeg, jpg
+  default-image-height: 2000
+  default-image-width: 2000
 
 ## OpenApi Settings ##
 springdoc:
