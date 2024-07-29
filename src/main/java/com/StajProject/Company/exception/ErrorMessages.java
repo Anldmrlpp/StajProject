@@ -21,4 +21,6 @@ public class ErrorMessages { //Hata mesajlarını tanımlanır.
     public static final String UNAUTHORIZED = "UNAUTHORIZED";
 
     public static final String INCORRECT_LOGIN = "Incorrect Email or Password Entry";
+
+    public static final String WRONG_ADMIN_KEY = "Wrong Admin Key. You Are Not Admin";
 }

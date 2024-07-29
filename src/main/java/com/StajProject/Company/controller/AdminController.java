@@ -8,8 +8,10 @@ import com.StajProject.Company.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,8 +20,18 @@ public class AdminController implements AdminApi {
     private final AdminService service;
 
     @Override
-    public ResponseEntity<AdminDto> signUpAdmin(AdminCreateDto adminCreateDto) {
-        return ResponseEntity.ok(service.signUpAdmin(adminCreateDto));
+    public ResponseEntity<AdminDto> signUpAdmin(String key, AdminCreateDto adminCreateDto) {
+        return ResponseEntity.ok(service.signUpAdmin(key, adminCreateDto));
+    }
+
+    @Override
+    public ResponseEntity<AdminDto> loginAdmin(String key, String email, String password) {
+        return ResponseEntity.ok(service.loginAdmin(key, email, password));
+    }
+
+    @Override
+    public ResponseEntity<AdminDto> getAdmin(String email) {
+        return ResponseEntity.ok(service.getAdmin(email));
     }
 
     @Override
@@ -33,13 +45,13 @@ public class AdminController implements AdminApi {
     }
 
     @Override
-    public ResponseEntity<AdminDto> updateAdmin(String email, AdminUpdateDto adminUpdateDto) {
-        return ResponseEntity.ok(service.updateAdmin(email, adminUpdateDto));
+    public ResponseEntity<AdminDto> updateAdmin(String key, UUID id, AdminUpdateDto adminUpdateDto, MultipartFile file) {
+        return ResponseEntity.ok(service.updateAdmin(key, id, adminUpdateDto, file));
     }
 
     @Override
-    public ResponseEntity<Boolean> deleteAdmin(String email) {
-        return ResponseEntity.ok(service.deleteAdmin(email));
+    public ResponseEntity<Boolean> deleteAdmin(String key, UUID id) {
+        return ResponseEntity.ok(service.deleteAdmin(key, id));
     }
 
 }
