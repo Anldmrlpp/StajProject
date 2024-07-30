@@ -6,11 +6,12 @@ import com.StajProject.Company.dto.AdminDto;
 import com.StajProject.Company.dto.AdminUpdateDto;
 import com.StajProject.Company.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -35,10 +36,11 @@ public class AdminController implements AdminApi {
     }
 
     @Override
-    public ResponseEntity<List<AdminDto>> getAdmins() {
-        return ResponseEntity.ok(service.getAdmins());
+    public ResponseEntity<Page<AdminDto>> getAdmins(Pageable pageable) {
+        return ResponseEntity.ok(service.getAdmins(pageable));
     }
 
+    @Override
     public ResponseEntity<AdminDto> updateAdmin(String key, UUID id, AdminUpdateDto adminUpdateDto, MultipartFile file) {
         return ResponseEntity.ok(service.updateAdmin(key, id, adminUpdateDto, file));
     }

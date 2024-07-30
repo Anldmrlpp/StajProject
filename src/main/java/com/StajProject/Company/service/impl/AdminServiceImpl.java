@@ -6,6 +6,7 @@ import com.StajProject.Company.dto.AdminUpdateDto;
 import com.StajProject.Company.exception.ErrorMessages;
 import com.StajProject.Company.exception.PermissionException;
 import com.StajProject.Company.mapper.AdminMapper;
+import com.StajProject.Company.mapper.PageMapperHelper;
 import com.StajProject.Company.model.Admin;
 import com.StajProject.Company.repository.AdminRepository;
 import com.StajProject.Company.service.AdminService;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -90,8 +93,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<AdminDto> getAdmins() {
-        return mapper.toDtoList(repository.findAll());
+    public Page<AdminDto> getAdmins(Pageable pageable) {
+        Page<Admin> responseAdmin = repository.findAll(pageable);
+
+        if(responseAdmin.isEmpty()) {
+            throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.ADMIN_NOT_FOUND);
+        }
+
+        return PageMapperHelper.mapEntityPageToDtoPage(responseAdmin, mapper);
     }
 
     @Override
