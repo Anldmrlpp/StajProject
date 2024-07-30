@@ -40,7 +40,6 @@ public class AdminController implements AdminApi {
         return ResponseEntity.ok(service.getAdmins(pageable));
     }
 
-    @Override
     public ResponseEntity<AdminDto> updateAdmin(String key, UUID id, AdminUpdateDto adminUpdateDto, MultipartFile file) {
         return ResponseEntity.ok(service.updateAdmin(key, id, adminUpdateDto, file));
     }
