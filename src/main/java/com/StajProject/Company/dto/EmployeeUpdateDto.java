@@ -15,7 +15,6 @@ public record EmployeeUpdateDto(
         @NotBlank
         @NotNull
         String password,
-        String imageUrl,
         String biography,
         String phoneNumber,
         String department,

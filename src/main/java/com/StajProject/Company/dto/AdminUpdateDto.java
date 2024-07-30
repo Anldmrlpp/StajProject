@@ -13,7 +13,6 @@ public record AdminUpdateDto(
         @NotBlank
         @NotNull
         String password,
-        String imageUrl,
         String phoneNumber,
         String role
 ) {

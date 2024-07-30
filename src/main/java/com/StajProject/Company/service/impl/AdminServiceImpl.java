@@ -11,7 +11,6 @@ import com.StajProject.Company.repository.AdminRepository;
 import com.StajProject.Company.service.AdminService;
 import com.StajProject.Company.service.FileService;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -36,9 +35,6 @@ public class AdminServiceImpl implements AdminService {
     private String adminKey;
     @Value("${file.allowed-formats}")
     private String[] allowedFormats;
-
-
-    private String adminKey;
 
     @Override
     public AdminDto signUpAdmin(String key, AdminCreateDto adminCreateDto) {
@@ -92,30 +88,10 @@ public class AdminServiceImpl implements AdminService {
 
         return mapper.toDto(responseAdmin.get());
     }
-    public AdminDto loginAdmin(String email, String password){
-        Optional<Admin> admin = repository.findByEmail(email);
-
-        if (admin.isPresent()){
-            Admin existAdmin = admin.get();
-
-            if (passwordEncoder.matches(password,existAdmin.getPassword())){
-                return mapper.toDto(existAdmin);
-            }
-            else {
-                throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.INCORRECT_LOGIN);
-            }
-        }
-
-        else {
-            throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.ADMIN_NOT_FOUND);
-        }
-    }
 
     @Override
     public List<AdminDto> getAdmins() {
-        System.out.println(adminKey);
         return mapper.toDtoList(repository.findAll());
-
     }
 
     @Override
