@@ -35,7 +35,6 @@ public class AdminController implements AdminApi {
         return ResponseEntity.ok(service.getAdmin(email));
     }
 
-    @Override
     public ResponseEntity<Page<AdminDto>> getAdmins(Pageable pageable) {
         return ResponseEntity.ok(service.getAdmins(pageable));
     }
