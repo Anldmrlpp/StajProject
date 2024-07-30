@@ -1,4 +1,4 @@
-package com.StajProje.Company.repository;
+package com.StajProject.Company.repository;
 
 import com.StajProject.Company.model.FileEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

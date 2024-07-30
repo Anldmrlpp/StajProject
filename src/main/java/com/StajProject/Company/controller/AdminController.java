@@ -1,4 +1,4 @@
-package com.StajProje.Company.controller;
+package com.StajProject.Company.controller;
 
 import com.StajProject.Company.api.AdminApi;
 import com.StajProject.Company.dto.AdminCreateDto;
@@ -35,16 +35,10 @@ public class AdminController implements AdminApi {
     }
 
     @Override
-    public ResponseEntity<AdminDto> loginAdmin(String email, String password) {
-        return ResponseEntity.ok(service.loginAdmin(email,password));
-    }
-
-    @Override
     public ResponseEntity<List<AdminDto>> getAdmins() {
         return ResponseEntity.ok(service.getAdmins());
     }
 
-    @Override
     public ResponseEntity<AdminDto> updateAdmin(String key, UUID id, AdminUpdateDto adminUpdateDto, MultipartFile file) {
         return ResponseEntity.ok(service.updateAdmin(key, id, adminUpdateDto, file));
     }

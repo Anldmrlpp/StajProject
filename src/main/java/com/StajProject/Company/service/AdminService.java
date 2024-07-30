@@ -11,14 +11,8 @@ import java.util.UUID;
 public interface AdminService {
     AdminDto signUpAdmin(String key,AdminCreateDto adminCreateDto);
     List<AdminDto> getAdmins();
-    AdminDto updateAdmin(String key,String email, AdminUpdateDto adminUpdateDto);
-    Boolean deleteAdmin(String key, String email);
-
     AdminDto loginAdmin(String key,String email, String password);
-
     AdminDto getAdmin(String email);
-
     AdminDto updateAdmin(String key, UUID id, AdminUpdateDto adminUpdateDto, MultipartFile file);
-
     Boolean deleteAdmin(String key, UUID id);
 }

@@ -39,4 +39,6 @@ public class Employee extends BaseEntity {
     private LocalDate birthday;
     @Column(name = "leave_balance")
     private int leaveBalance;
+    @Column(name = "statuses")
+    private String statuses;
 }

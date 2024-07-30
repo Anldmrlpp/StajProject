@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS util_sch.employee_data
     department                 VARCHAR,
     birthday                   DATE,
     leave_balance              INT NOT NULL,
+    statuses                   VARCHAR NOT NULL,
     created_date               DATE NOT NULL,
     updated_date               DATE NOT NULL,
     PRIMARY KEY (id)

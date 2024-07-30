@@ -11,6 +11,7 @@ public record AdminDto(
         String imageUrl,
         String phoneNumber,
         String role,
+        String statuses,
         LocalDateTime createdDate,
         LocalDateTime updatedDate
 ) {

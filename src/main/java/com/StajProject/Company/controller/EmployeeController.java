@@ -6,10 +6,12 @@ import com.StajProject.Company.dto.EmployeeDto;
 import com.StajProject.Company.dto.EmployeeUpdateDto;
 import com.StajProject.Company.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -34,8 +36,8 @@ public class EmployeeController implements EmployeeApi {
     }
 
     @Override
-    public ResponseEntity<EmployeeDto> updateEmployee(UUID id, EmployeeUpdateDto employeeUpdateDto) {
-        return ResponseEntity.ok(service.updateEmployee(id, employeeUpdateDto));
+    public ResponseEntity<EmployeeDto> updateEmployee(UUID id, EmployeeUpdateDto employeeUpdateDto, MultipartFile file) {
+        return ResponseEntity.ok(service.updateEmployee(id, employeeUpdateDto, file));
     }
 
     @Override
@@ -44,7 +46,7 @@ public class EmployeeController implements EmployeeApi {
     }
 
     @Override
-    public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
-        return ResponseEntity.ok(service.getAllEmployees());
+    public ResponseEntity<Page<EmployeeDto>> getAllEmployees(Pageable pageable) {
+        return ResponseEntity.ok(service.getAllEmployees(pageable));
     }
 }
