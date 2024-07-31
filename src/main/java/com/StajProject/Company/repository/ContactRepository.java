@@ -1,6 +1,5 @@
 package com.StajProject.Company.repository;
 
-import com.StajProject.Company.model.Admin;
 import com.StajProject.Company.model.Contact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

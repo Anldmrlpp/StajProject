@@ -44,7 +44,11 @@ public class SecurityConfig {
             "/api/v1/admins/signup",
             "/api/v1/admins/login/{email}",
             "/api/v1/admins/get/admin/{email}",
-            "/api/v1/admins/get"
+            "/api/v1/admins/get",
+            "/api/v1/contact",
+            "/api/v1/contact/create",
+            "/api/v1/contact/update"
+
     };
 
     public static final String[] USER_ENDPOINTS = {
@@ -58,7 +62,11 @@ public class SecurityConfig {
             "/api/v1/permissions/delete/{id}",
             "/api/v1/permissions/delete/employee/{employeeId}",
             "/api/v1/admins/update/{id}",
-            "/api/v1/admins/delete/{id}"
+            "/api/v1/admins/delete/{id}",
+            "/api/v1/contact/{id}",
+            "/api/v1/contact/allContacts",
+            "/api/v1/contact/delete/{id}"
+
     };
 
     @Bean
