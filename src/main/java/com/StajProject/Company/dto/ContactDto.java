@@ -1,13 +1,16 @@
 package com.StajProject.Company.dto;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record ContactDto(
         UUID id,
-        String firstName,
+        String name,
         String email,
         String subject,
-        String message
+        String message,
+        LocalDateTime createdDate,
+        LocalDateTime updatedDate
 
 ) {
 }

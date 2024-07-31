@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -46,14 +45,15 @@ public class SecurityConfig {
             "/api/v1/admins/get/admin/{email}",
             "/api/v1/admins/get",
             "/api/v1/contact",
-            "/api/v1/contact/create",
-            "/api/v1/contact/update"
+            "/api/v1/contacts/update"
 
     };
 
     public static final String[] USER_ENDPOINTS = {
             "/api/v1/employee/update/{id}",
-            "/api/v1/employee/delete/{id}"
+            "/api/v1/employee/delete/{id}",
+            "/api/v1/contact/create"
+
     };
 
     private static final String[] ADMIN_ENDPOINTS = {
@@ -63,10 +63,9 @@ public class SecurityConfig {
             "/api/v1/permissions/delete/employee/{employeeId}",
             "/api/v1/admins/update/{id}",
             "/api/v1/admins/delete/{id}",
-            "/api/v1/contact/{id}",
-            "/api/v1/contact/allContacts",
-            "/api/v1/contact/delete/{id}"
-
+            "/api/v1/contacts/get/{id}",
+            "/api/v1/contacts/getpage",
+            "/api/v1/contacts/delete/{id}"
     };
 
     @Bean
@@ -74,7 +73,7 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers(AUTH_WHITELIST).permitAll(); // Swagger UI'yi izinli hale getir
+                    registry.requestMatchers(AUTH_WHITELIST).permitAll();
                     registry.requestMatchers(PERMIT_ALL_ENDPOINTS).permitAll();
                     registry.requestMatchers(USER_ENDPOINTS).hasAnyRole("USER" , "ADMIN");
                     registry.requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN");

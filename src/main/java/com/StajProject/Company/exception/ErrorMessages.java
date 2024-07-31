@@ -31,4 +31,6 @@ public class ErrorMessages { //Hata mesajlarını tanımlanır.
     public static final String FILE_CANNOT_WRITE = "An error occurred while uploading the file!";
 
     public static final String UNSUPPORTED_FILE_TYPE = "Unsupported file. Only PNG, JPEG, JPG, MP3, MP4, PDF and CSV supported";
+
+    public static final String CONTACT_NOT_FOUND = "Message Not Found!";
 }

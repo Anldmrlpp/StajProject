@@ -17,8 +17,8 @@ public class Contact {
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "email")
     private String email;
@@ -28,4 +28,5 @@ public class Contact {
 
     @Column(name = "message")
     private String message;
+
 }

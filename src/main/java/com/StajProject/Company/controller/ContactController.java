@@ -3,7 +3,6 @@ package com.StajProject.Company.controller;
 import com.StajProject.Company.api.ContactApi;
 import com.StajProject.Company.dto.ContactCreateDto;
 import com.StajProject.Company.dto.ContactDto;
-import com.StajProject.Company.dto.ContactUpdateDto;
 import com.StajProject.Company.service.ContactService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,13 +33,8 @@ public class ContactController implements ContactApi {
     }
 
     @Override
-    public ResponseEntity<Boolean> updateContact(ContactUpdateDto contactUpdateDto) {
-        return ResponseEntity.ok(service.updateContact(contactUpdateDto));
-    }
-
-    @Override
-    public ResponseEntity<Boolean> deleteContact(UUID id) {
-        return ResponseEntity.ok(service.deleteContact(id));
+    public ResponseEntity<Boolean> deleteContactById(UUID id) {
+        return ResponseEntity.ok(service.deleteContactById(id));
     }
 
 }
