@@ -2,6 +2,7 @@ package com.StajProject.Company.config;
 
 import com.StajProject.Company.exception.AuthException;
 import com.StajProject.Company.service.AuthService;
+import com.StajProject.Company.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,28 +33,22 @@ public class SecurityConfig {
     };
 
     private static final String[] PERMIT_ALL_ENDPOINTS = {
-            "/api/v1/employee",
             "/api/v1/employee/signup",
             "/api/v1/employee/login/{email}",
             "/api/v1/employee/get",
             "/api/v1/employee/allEmployees",
             "/api/v1/permissions/get/{id}",
             "/api/v1/permissions/get/employee/{employeeId}",
-            "/api/v1/admins",
             "/api/v1/admins/signup",
             "/api/v1/admins/login/{email}",
             "/api/v1/admins/get/admin/{email}",
-            "/api/v1/admins/get",
-            "/api/v1/contact",
-            "/api/v1/contacts/update"
-
+            "/api/v1/admins/get"
     };
 
-    public static final String[] USER_ENDPOINTS = {
+    private static final String[] USER_ENDPOINTS = {
             "/api/v1/employee/update/{id}",
             "/api/v1/employee/delete/{id}",
-            "/api/v1/contact/create"
-
+            "/api/v1/contacts/create"
     };
 
     private static final String[] ADMIN_ENDPOINTS = {
@@ -72,10 +67,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(registry -> {
+                .authorizeHttpRequests(registry ->{
                     registry.requestMatchers(AUTH_WHITELIST).permitAll();
                     registry.requestMatchers(PERMIT_ALL_ENDPOINTS).permitAll();
-                    registry.requestMatchers(USER_ENDPOINTS).hasAnyRole("USER" , "ADMIN");
+                    registry.requestMatchers(USER_ENDPOINTS).hasAnyRole("USER", "ADMIN");
                     registry.requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN");
                     registry.anyRequest().authenticated();
                 })
@@ -87,9 +82,6 @@ public class SecurityConfig {
                 )
                 .build();
     }
-
-
-
 
     @Bean
     public UserDetailsService userDetailsService() {
