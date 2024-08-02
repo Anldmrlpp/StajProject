@@ -23,8 +23,8 @@ import java.util.UUID;
 @Service
 public class ContactServiceImpl implements ContactService {
 
-    private ContactRepository contactRepository;
-    private ContactMapper contactMapper;
+    private final ContactRepository contactRepository;
+    private final ContactMapper contactMapper;
 
     @Override
     public UUID createContact(ContactCreateDto contactCreateDto) {

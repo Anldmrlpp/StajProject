@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/company_permission
     username: postgres
-    password: Recordes963
+    password: 159753
     pool:
       max-create-connection-time: 2s
       initial-size: 5
