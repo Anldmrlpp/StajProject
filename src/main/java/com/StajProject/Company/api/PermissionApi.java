@@ -15,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
-import java.util.List;
 import java.util.UUID;
 
 @Tag(name = "Permission_Service")

@@ -52,7 +52,7 @@ public interface EmployeeApi {
     @GetMapping(value = "/login/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<EmployeeDto> loginEmployee(@PathVariable String email, @RequestParam String password);
 
-    @Operation(operationId = "getEmployee", summary = "Get employee.")
+    @Operation(operationId = "getEmployeeWithEmail", summary = "Get employee with email.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = EmployeeDto.class))),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = Error.class))),
@@ -62,8 +62,21 @@ public interface EmployeeApi {
             @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<EmployeeDto> getEmployee(@RequestParam String email);
+    @GetMapping(value = "/get/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<EmployeeDto> getEmployeeWithEmail(@PathVariable String email);
+
+    @Operation(operationId = "getEmployeeWithId", summary = "Get employee with id.")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = EmployeeDto.class))),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "405", description = "Method Not Allowed", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
+    })
+    @GetMapping(value = "/get/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<EmployeeDto> getEmployeeWithId(@PathVariable UUID id);
 
     @Operation(operationId = "updateEmployee", summary = "Update employee. (You need use postman. You cannot use this method in Swagger.)")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = EmployeeDto.class))),

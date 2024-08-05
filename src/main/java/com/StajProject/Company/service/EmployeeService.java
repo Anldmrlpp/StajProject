@@ -17,6 +17,8 @@ public interface EmployeeService { //çalışanlarla ilgili işlemler tanımland
     EmployeeDto updateEmployee(UUID id, EmployeeUpdateDto employeeUpdateDto, MultipartFile file);
     Boolean deleteEmployee(UUID id);
     Page<EmployeeDto> getAllEmployees(Pageable pageable);
+    EmployeeDto getEmployeeWithEmail(String email);
+    EmployeeDto getEmployeeWithId(UUID id);
 
     //Calısanlar bulunamazsa PermissionException fırlatılır.
 }

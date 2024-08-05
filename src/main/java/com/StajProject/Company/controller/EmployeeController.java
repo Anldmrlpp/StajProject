@@ -31,8 +31,13 @@ public class EmployeeController implements EmployeeApi {
     }
 
     @Override
-    public ResponseEntity<EmployeeDto> getEmployee(String email) {
-        return ResponseEntity.ok(service.getEmployee(email));
+    public ResponseEntity<EmployeeDto> getEmployeeWithEmail(String email) {
+        return ResponseEntity.ok(service.getEmployeeWithEmail(email));
+    }
+
+    @Override
+    public ResponseEntity<EmployeeDto> getEmployeeWithId(UUID id){
+        return ResponseEntity.ok(service.getEmployeeWithId(id));
     }
 
     @Override

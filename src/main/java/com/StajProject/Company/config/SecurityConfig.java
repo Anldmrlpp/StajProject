@@ -35,7 +35,8 @@ public class SecurityConfig {
     private static final String[] PERMIT_ALL_ENDPOINTS = {
             "/api/v1/employee/signup",
             "/api/v1/employee/login/{email}",
-            "/api/v1/employee/get",
+            "/api/v1/employee/get/email/{email}",
+            "/api/v1/employee/get/id/{id}",
             "/api/v1/employee/allEmployees",
             "/api/v1/permissions/get/{id}",
             "/api/v1/permissions/get/all",
