@@ -12,8 +12,8 @@ public record AdminCreateDto(
         @NotNull
         String lastName,
         @NotBlank
-        @NotNull
         @Email
+        @NotNull
         String email,
         @NotBlank
         @NotNull

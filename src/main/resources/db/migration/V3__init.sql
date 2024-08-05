@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS util_sch.admin_data
     image_url                VARCHAR UNIQUE,
     phone_number             VARCHAR,
     role                     VARCHAR,
+    statuses                 VARCHAR NOT NULL,
     created_date             DATE NOT NULL,
     updated_date             DATE NOT NULL,
     PRIMARY KEY (id)
