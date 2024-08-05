@@ -2,7 +2,6 @@ package com.StajProject.Company.config;
 
 import com.StajProject.Company.exception.AuthException;
 import com.StajProject.Company.service.AuthService;
-import com.StajProject.Company.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

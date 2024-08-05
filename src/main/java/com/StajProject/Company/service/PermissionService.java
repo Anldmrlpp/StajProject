@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.UUID;
 
 public interface PermissionService {
+
     PermissionDto addPermission(PermissionCreateDto permissionCreateDto);
     PermissionDto getPermission(UUID id);
     Page<PermissionWithEmployeeDto> getPermissions(Pageable pageable);
@@ -17,4 +18,5 @@ public interface PermissionService {
     PermissionDto updatePermission(UUID id, PermissionUpdateDto permissionUpdateDto);
     Boolean deletePermission(UUID id);
     Boolean deletePermissionsForEmployee(UUID employeeId);
+
 }

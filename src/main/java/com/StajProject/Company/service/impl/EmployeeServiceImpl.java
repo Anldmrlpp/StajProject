@@ -69,11 +69,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto getEmployee(String email) {
-        return null;
-    }
-
-    @Override
     public EmployeeDto getEmployeeWithEmail(String email) {
         Optional<Employee> existEmployee = employeeRepository.findByEmail(email);
 
@@ -88,11 +83,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getEmployeeWithId(UUID id) {
         Optional<Employee> existEmployee = employeeRepository.findById(id);
 
-        if (existEmployee.isEmpty()){
+        if(existEmployee.isEmpty()) {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMPLOYEE_NOT_FOUND);
         }
-        return employeeMapper.toDto(existEmployee.get());
 
+        return employeeMapper.toDto(existEmployee.get());
     }
 
     @Override

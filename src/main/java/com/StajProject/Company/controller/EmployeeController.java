@@ -36,7 +36,7 @@ public class EmployeeController implements EmployeeApi {
     }
 
     @Override
-    public ResponseEntity<EmployeeDto> getEmployeeWithId(UUID id){
+    public ResponseEntity<EmployeeDto> getEmployeeWithId(UUID id) {
         return ResponseEntity.ok(service.getEmployeeWithId(id));
     }
 
@@ -49,6 +49,7 @@ public class EmployeeController implements EmployeeApi {
     public ResponseEntity<Boolean> deleteEmployee(UUID id) {
         return ResponseEntity.ok(service.deleteEmployee(id));
     }
+
     @Override
     public ResponseEntity<Page<EmployeeDto>> getAllEmployees(Pageable pageable) {
         return ResponseEntity.ok(service.getAllEmployees(pageable));
