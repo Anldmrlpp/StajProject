@@ -38,6 +38,7 @@ public class SecurityConfig {
             "/api/v1/employee/get",
             "/api/v1/employee/allEmployees",
             "/api/v1/permissions/get/{id}",
+            "/api/v1/permissions/get/all",
             "/api/v1/permissions/get/employee/{employeeId}",
             "/api/v1/admins/signup",
             "/api/v1/admins/login/{email}",

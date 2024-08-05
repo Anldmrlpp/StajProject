@@ -5,6 +5,7 @@ import com.StajProject.Company.dto.PermissionDto;
 import com.StajProject.Company.dto.PermissionUpdateDto;
 import com.StajProject.Company.exception.ErrorMessages;
 import com.StajProject.Company.exception.PermissionException;
+import com.StajProject.Company.mapper.PageMapperHelper;
 import com.StajProject.Company.mapper.PermissionMapper;
 import com.StajProject.Company.model.Employee;
 import com.StajProject.Company.model.Permission;
@@ -12,10 +13,12 @@ import com.StajProject.Company.repository.EmployeeRepository;
 import com.StajProject.Company.repository.PermissionRepository;
 import com.StajProject.Company.service.PermissionService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.query.Page;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -67,18 +70,6 @@ public class PermissionServiceImpl implements PermissionService {
         }
 
         return mapper.toDto(existPermission.get());
-    }
-
-    @Override
-    public List<PermissionDto> getPermissionsForEmployee(UUID employeeId) {
-        // Bir çalışanın sahip olduğu tüm izinler getirildi.
-        List<Permission> existPermissions = permissionRepository.findByEmployeeId(employeeId);
-
-        if(existPermissions.isEmpty()) {
-            throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.PERMISSION_NOT_FOUND_FOR_EMPLOYEE);
-        }
-
-        return mapper.toDtoList(existPermissions);
     }
 
     @Override
@@ -189,5 +180,25 @@ public class PermissionServiceImpl implements PermissionService {
         employeeRepository.save(existEmployee);
 
         return true;
+    }
+
+    @Override
+    public Page<PermissionDto> getPermissions(Pageable pageable) {
+        Page<Permission> existPermission = permissionRepository.findById(pageable);
+
+        if(existPermission.isEmpty()){
+            throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.PERMISSION_NOT_FOUND);
+        }
+        return PageMapperHelper.mapEntityPageToDtoPage(existPermission, mapper);
+    }
+
+    @Override
+    public Page<PermissionDto> getPermissionsForEmployee(UUID employeeId, Pageable pageable) {
+        Page<Permission> existPermissions = permissionRepository.findAllByEmployeeId(employeeId, pageable);
+
+        if(existPermissions.isEmpty()) {
+            throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.PERMISSION_NOT_FOUND_FOR_EMPLOYEE);
+        }
+        return PageMapperHelper.mapEntityPageToDtoPage(existPermissions, mapper);
     }
 }
