@@ -4,6 +4,7 @@ import com.StajProject.Company.api.PermissionApi;
 import com.StajProject.Company.dto.PermissionCreateDto;
 import com.StajProject.Company.dto.PermissionDto;
 import com.StajProject.Company.dto.PermissionUpdateDto;
+import com.StajProject.Company.dto.PermissionWithEmployeeDto;
 import com.StajProject.Company.service.PermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,11 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
-@RestController
 @RequiredArgsConstructor
+@RestController
 public class PermissionController implements PermissionApi {
+
     private final PermissionService permissionService;
 
     @Override
@@ -29,12 +32,12 @@ public class PermissionController implements PermissionApi {
     }
 
     @Override
-    public ResponseEntity<Page<PermissionDto>> getPermissions(Pageable pageable) {
+    public ResponseEntity<Page<PermissionWithEmployeeDto>> getPermissions(Pageable pageable) {
         return ResponseEntity.ok(permissionService.getPermissions(pageable));
     }
 
     @Override
-    public ResponseEntity<Page<PermissionDto>> getPermissionsForEmployee(UUID employeeId, Pageable pageable) {
+    public ResponseEntity<Page<PermissionWithEmployeeDto>> getPermissionsForEmployee(UUID employeeId, Pageable pageable) {
         return ResponseEntity.ok(permissionService.getPermissionsForEmployee(employeeId, pageable));
     }
 
@@ -52,4 +55,5 @@ public class PermissionController implements PermissionApi {
     public ResponseEntity<Boolean> deletePermissionsForEmployee(UUID employeeId) {
         return ResponseEntity.ok(permissionService.deletePermissionsForEmployee(employeeId));
     }
+
 }
