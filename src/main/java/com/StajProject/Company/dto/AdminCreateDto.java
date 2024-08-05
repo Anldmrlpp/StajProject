@@ -1,5 +1,6 @@
 package com.StajProject.Company.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -12,6 +13,7 @@ public record AdminCreateDto(
         String lastName,
         @NotBlank
         @NotNull
+        @Email
         String email,
         @NotBlank
         @NotNull
