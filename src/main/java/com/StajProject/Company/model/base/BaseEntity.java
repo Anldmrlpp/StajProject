@@ -17,11 +17,11 @@ public abstract class BaseEntity {
     @Id
     @GeneratedValue
     private UUID id;
-
     @CreatedDate
     @Column(name = "created_date")
     private LocalDateTime createdDate;
     @LastModifiedDate
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
+
 }

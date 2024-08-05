@@ -13,7 +13,7 @@ import java.util.UUID;
 @Data
 @Table(name = "permission_data", schema = "util_sch")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Permission { // izin bilgilerini tutmak için kullanıldı , permission_data.
+public class Permission {
     @Id
     @GeneratedValue
     private UUID id;
