@@ -1,7 +1,6 @@
 package com.StajProject.Company.model;
 
 import com.StajProject.Company.model.base.BaseEntity;
-import com.StajProject.Company.model.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;

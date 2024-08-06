@@ -5,14 +5,14 @@ import org.mapstruct.InheritInverseConfiguration;
 
 import java.util.List;
 
-public interface BaseMapper<S, T> { //Nesne dönüşümlerini gerçekleştirmek için kullanıldı.
+public interface BaseMapper<S, T> {
 
     T toDto(S s);
 
     @InheritInverseConfiguration
     S toEntity(T t);
 
-    @InheritConfiguration//miras
+    @InheritConfiguration
     List<T> toDtoList(List<S> sourceList);
 
     @InheritConfiguration

@@ -1,3 +1,4 @@
+
 package com.StajProject.Company.repository;
 
 import com.StajProject.Company.model.Permission;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface PermissionRepository extends JpaRepository<Permission, UUID> {
 
-    List<Permission> findByEmployeeId(UUID id);
-    Page<Permission> findAllByEmployeeId(UUID id, Pageable pageable);
+    Page<Permission> findAllByEmployeeId(UUID employeeId, Pageable pageable);
+    List<Permission> findByEmployeeId(UUID employeeId);
 
 }

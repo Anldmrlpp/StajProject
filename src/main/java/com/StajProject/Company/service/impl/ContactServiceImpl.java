@@ -23,52 +23,50 @@ import java.util.UUID;
 @Service
 public class ContactServiceImpl implements ContactService {
 
-    private final ContactRepository contactRepository;
-    private final ContactMapper contactMapper;
+    private final ContactRepository repository;
+    private final ContactMapper mapper;
 
     @Override
     public UUID createContact(ContactCreateDto contactCreateDto) {
         Contact contact = new Contact();
         BeanUtils.copyProperties(contactCreateDto, contact);
-        Contact savedContact = contactRepository.save(contact);
+        Contact response = repository.save(contact);
 
-        return savedContact.getId();
+        return response.getId();
     }
 
     @Override
     public ContactDto getContactById(UUID id) {
-        Optional<Contact> contactOptional = contactRepository.findById(id);
+        Optional<Contact> response = repository.findById(id);
 
-        if (contactOptional.isPresent()){
-            return contactMapper.toDto(contactOptional.get());
-        }else {
+        if(response.isEmpty()) {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.CONTACT_NOT_FOUND);
         }
 
+        return mapper.toDto(response.get());
     }
 
     @Override
     public Page<ContactDto> getAllContacts(Pageable pageable) {
-        Page<Contact> contactsPage = contactRepository.findAll(pageable);
+        Page<Contact> response = repository.findAll(pageable);
 
-        if(contactsPage.isEmpty()){
+        if(response.isEmpty()) {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.CONTACT_NOT_FOUND);
         }
 
-        return PageMapperHelper.mapEntityPageToDtoPage(contactsPage,contactMapper);
+        return PageMapperHelper.mapEntityPageToDtoPage(response, mapper);
     }
 
     @Override
     public Boolean deleteContactById(UUID id) {
-        Optional<Contact> contactOptional = contactRepository.findById(id);
+        Optional<Contact> response = repository.findById(id);
 
-        if(contactOptional.isEmpty()) {
+        if(response.isEmpty()) {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.CONTACT_NOT_FOUND);
         }
 
-        contactRepository.delete(contactOptional.get());
+        repository.delete(response.get());
 
         return true;
     }
-
 }

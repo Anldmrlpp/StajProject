@@ -174,16 +174,22 @@ public class PermissionServiceImpl implements PermissionService {
             int numberOfPermissionDay = (int)ChronoUnit.DAYS.between(permissionUpdateDto.startDate(), permissionUpdateDto.endDate());
 
             wrongEmployee.setLeaveBalance(wrongEmployee.getLeaveBalance() + existPermission.getNumberOfDays());
-            trueEmployee.setLeaveBalance(trueEmployee.getLeaveBalance() - (numberOfPermissionDay+1));
+            if(trueEmployee.getLeaveBalance() - (numberOfPermissionDay+1) >= 0) {
+                trueEmployee.setLeaveBalance(trueEmployee.getLeaveBalance() - (numberOfPermissionDay+1));
 
-            BeanUtils.copyProperties(permissionUpdateDto, existPermission);
-            existPermission.setNumberOfDays(numberOfPermissionDay+1);
+                BeanUtils.copyProperties(permissionUpdateDto, existPermission);
+                existPermission.setNumberOfDays(numberOfPermissionDay+1);
 
-            Permission responseUpdate = permissionRepository.save(existPermission);
-            employeeRepository.save(wrongEmployee);
-            employeeRepository.save(trueEmployee);
+                Permission responseUpdate = permissionRepository.save(existPermission);
+                employeeRepository.save(wrongEmployee);
+                employeeRepository.save(trueEmployee);
 
-            return mapper.toDto(responseUpdate);
+                return mapper.toDto(responseUpdate);
+            }
+            else {
+                throw PermissionException.withStatusAndMessage(HttpStatus.BAD_REQUEST, ErrorMessages.DONT_HAVE_ENOUGH_PERMISSION);
+            }
+
         }
         else {
             Optional<Employee> responseEmployee = employeeRepository.findById(existPermission.getEmployeeId());
@@ -196,15 +202,21 @@ public class PermissionServiceImpl implements PermissionService {
             existEmployee.setLeaveBalance(existEmployee.getLeaveBalance() + existPermission.getNumberOfDays());
 
             int numberOfPermissionDay = (int)ChronoUnit.DAYS.between(permissionUpdateDto.startDate(), permissionUpdateDto.endDate());
-            existEmployee.setLeaveBalance(existEmployee.getLeaveBalance() - (numberOfPermissionDay+1));
+            if(existEmployee.getLeaveBalance() - (numberOfPermissionDay+1) >= 0) {
+                existEmployee.setLeaveBalance(existEmployee.getLeaveBalance() - (numberOfPermissionDay+1));
 
-            BeanUtils.copyProperties(permissionUpdateDto, existPermission);
-            existPermission.setNumberOfDays(numberOfPermissionDay+1);
+                BeanUtils.copyProperties(permissionUpdateDto, existPermission);
+                existPermission.setNumberOfDays(numberOfPermissionDay+1);
 
-            Permission responseUpdate = permissionRepository.save(existPermission);
-            employeeRepository.save(existEmployee);
+                Permission responseUpdate = permissionRepository.save(existPermission);
+                employeeRepository.save(existEmployee);
 
-            return mapper.toDto(responseUpdate);
+                return mapper.toDto(responseUpdate);
+            }
+            else {
+                throw PermissionException.withStatusAndMessage(HttpStatus.BAD_REQUEST, ErrorMessages.DONT_HAVE_ENOUGH_PERMISSION);
+            }
+
         }
     }
 

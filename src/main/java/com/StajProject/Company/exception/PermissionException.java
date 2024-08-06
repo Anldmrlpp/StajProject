@@ -1,3 +1,4 @@
+
 package com.StajProject.Company.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,7 +14,7 @@ import static com.StajProject.Company.exception.ErrorMessages.DEFAULT_ERROR_MESS
 
 @Getter
 @Setter
-public class PermissionException extends RuntimeException implements Serializable { //Sınıfın serileşebilir olması durumu.
+public class PermissionException extends RuntimeException implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,8 +44,6 @@ public class PermissionException extends RuntimeException implements Serializabl
         this.message = message;
         this.detail = errorDetail;
     }
-
-    //üç metod, belirli hata senaryolarına uygun PermissionException nesneleri yaratmak için kullanıldı.
 
     public static PermissionException withStatusAndThrowable(HttpStatus status, Throwable throwable){
         return new PermissionException(status, throwable);

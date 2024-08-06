@@ -9,11 +9,11 @@ import java.util.UUID;
 public record PermissionUpdateDto(
         @NotNull
         UUID employeeId,
+        @NotBlank
         @NotNull
         String description,
         @NotNull
         LocalDate startDate,
-        @NotBlank
         @NotNull
         LocalDate endDate
 ) {

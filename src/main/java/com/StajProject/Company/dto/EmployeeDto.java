@@ -14,8 +14,8 @@ public record EmployeeDto(
         String phoneNumber,
         String department,
         LocalDate birthday,
-        String statuses,
         int leaveBalance,
+        String statuses,
         LocalDateTime createdDate,
         LocalDateTime updatedDate
 ) {

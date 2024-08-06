@@ -11,6 +11,5 @@ public record ContactDto(
         String message,
         LocalDateTime createdDate,
         LocalDateTime updatedDate
-
 ) {
 }

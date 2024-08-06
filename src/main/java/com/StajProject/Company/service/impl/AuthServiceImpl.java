@@ -64,6 +64,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         Optional<Admin> authenticatedAdminOpt = adminRepository.findByEmail(authenticatedUserEmail);
+
         return authenticatedAdminOpt.isPresent();
     }
 

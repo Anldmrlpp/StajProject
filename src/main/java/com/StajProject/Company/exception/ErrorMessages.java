@@ -1,6 +1,6 @@
 package com.StajProject.Company.exception;
 
-public class ErrorMessages { //Hata mesajlarını tanımlanır.
+public class ErrorMessages {
 
     private ErrorMessages(){}
 
@@ -10,9 +10,9 @@ public class ErrorMessages { //Hata mesajlarını tanımlanır.
 
     public static final String DONT_HAVE_ENOUGH_PERMISSION = "You don't have enough permission days";
 
-    public static final String PERMISSION_NOT_FOUND = "Permission Not Found!";
-
     public static final String PERMISSION_NOT_FOUND_FOR_EMPLOYEE = "Permission not found for this employee!";
+
+    public static final String PERMISSION_NOT_FOUND = "Permission Not Found!";
 
     public static final String ADMIN_NOT_FOUND = "Admin Not Found";
 
@@ -33,4 +33,5 @@ public class ErrorMessages { //Hata mesajlarını tanımlanır.
     public static final String UNSUPPORTED_FILE_TYPE = "Unsupported file. Only PNG, JPEG, JPG, MP3, MP4, PDF and CSV supported";
 
     public static final String CONTACT_NOT_FOUND = "Message Not Found!";
+
 }
