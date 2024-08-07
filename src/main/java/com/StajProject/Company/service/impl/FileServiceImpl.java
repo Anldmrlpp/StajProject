@@ -3,13 +3,15 @@ package com.StajProject.Company.service.impl;
 import com.StajProject.Company.exception.ErrorMessages;
 import com.StajProject.Company.exception.PermissionException;
 import com.StajProject.Company.model.FileEntity;
+import com.StajProject.Company.model.PropertiesData;
 import com.StajProject.Company.repository.FileRepository;
+import com.StajProject.Company.repository.PropertiesDataRepository;
 import com.StajProject.Company.service.FileService;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,6 @@ import java.util.concurrent.ExecutionException;
 
 @RequiredArgsConstructor
 @Service
-@PropertySource("classpath:config.properties")
 public class FileServiceImpl implements FileService {
 
     private final FileRepository repository;
@@ -40,10 +41,23 @@ public class FileServiceImpl implements FileService {
     @Value("${file.default-image-width}")
     private int defaultImageWidth;
 
-    @Value("${awsS3BucketName}")
+    private final PropertiesDataRepository propertiesDataRepository;
+
     private String bucketName;
-    @Value("${awsCdnPath}")
     private String cdnPath;
+
+    @PostConstruct
+    public void init() {
+        List<PropertiesData> response = propertiesDataRepository.findAll();
+
+        if (response.isEmpty()) {
+            throw PermissionException.withStatusAndMessage(HttpStatus.BAD_REQUEST, ErrorMessages.CONFIG_PROPERTIES_NOT_FOUND);
+        } else {
+            PropertiesData propertiesData = response.getFirst();
+            this.bucketName = propertiesData.getAwsS3BucketName();
+            this.cdnPath = propertiesData.getAwsCdnPath();
+        }
+    }
 
     @Override
     public String uploadFile(MultipartFile file) {

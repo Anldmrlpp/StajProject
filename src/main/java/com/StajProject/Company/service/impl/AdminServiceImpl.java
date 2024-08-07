@@ -8,13 +8,15 @@ import com.StajProject.Company.exception.PermissionException;
 import com.StajProject.Company.mapper.AdminMapper;
 import com.StajProject.Company.mapper.PageMapperHelper;
 import com.StajProject.Company.model.Admin;
+import com.StajProject.Company.model.PropertiesData;
 import com.StajProject.Company.repository.AdminRepository;
+import com.StajProject.Company.repository.PropertiesDataRepository;
 import com.StajProject.Company.service.AdminService;
 import com.StajProject.Company.service.FileService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -26,7 +28,6 @@ import java.util.*;
 
 @RequiredArgsConstructor
 @Service
-@PropertySource("classpath:config.properties")
 public class AdminServiceImpl implements AdminService {
 
     private final AdminRepository repository;
@@ -34,10 +35,23 @@ public class AdminServiceImpl implements AdminService {
     private final PasswordEncoder passwordEncoder;
     private final FileService fileService;
 
-    @Value("${adminSignUpKey}")
+    private final PropertiesDataRepository propertiesDataRepository;
+
     private String adminKey;
     @Value("${file.allowed-formats}")
     private String[] allowedFormats;
+
+    @PostConstruct
+    public void init() {
+        List<PropertiesData> response = propertiesDataRepository.findAll();
+
+        if (response.isEmpty()) {
+            throw PermissionException.withStatusAndMessage(HttpStatus.BAD_REQUEST, ErrorMessages.CONFIG_PROPERTIES_NOT_FOUND);
+        } else {
+            PropertiesData propertiesData = response.getFirst();
+            this.adminKey = propertiesData.getAdminSignUpKey();
+        }
+    }
 
     @Override
     public AdminDto signUpAdmin(String key, AdminCreateDto adminCreateDto) {

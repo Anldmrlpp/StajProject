@@ -34,4 +34,7 @@ public class ErrorMessages {
 
     public static final String CONTACT_NOT_FOUND = "Message Not Found!";
 
+    public static final String CONFIG_PROPERTIES_NOT_FOUND = "Config properties not found in the database";
+
+
 }
