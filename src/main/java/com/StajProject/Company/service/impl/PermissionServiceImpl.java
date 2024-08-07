@@ -6,7 +6,6 @@ import com.StajProject.Company.dto.PermissionUpdateDto;
 import com.StajProject.Company.dto.PermissionWithEmployeeDto;
 import com.StajProject.Company.exception.ErrorMessages;
 import com.StajProject.Company.exception.PermissionException;
-import com.StajProject.Company.mapper.PageMapperHelper;
 import com.StajProject.Company.mapper.PermissionMapper;
 import com.StajProject.Company.model.Employee;
 import com.StajProject.Company.model.Permission;
@@ -41,7 +40,7 @@ public class PermissionServiceImpl implements PermissionService {
         BeanUtils.copyProperties(permissionCreateDto, permission);
         int numberOfPermissionDay = (int)ChronoUnit.DAYS.between(permissionCreateDto.startDate(), permissionCreateDto.endDate());
 
-        Optional<Employee> responseEmployee = employeeRepository.findById(permissionCreateDto.employeeId());
+        Optional<Employee> responseEmployee = employeeRepository.findByEmail(permissionCreateDto.email());
 
         if(responseEmployee.isPresent()) {
             Employee existEmployee = responseEmployee.get();
@@ -86,7 +85,7 @@ public class PermissionServiceImpl implements PermissionService {
         List<PermissionWithEmployeeDto> dtoList = new ArrayList<>();
 
         for(Permission permission : existPermissions) {
-            Optional<Employee> responseEmployee = employeeRepository.findById(permission.getEmployeeId());
+            Optional<Employee> responseEmployee = employeeRepository.findByEmail(permission.getEmail());
 
             if(responseEmployee.isEmpty()) {
                 throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.DEFAULT_ERROR_MESSAGE);
@@ -96,10 +95,9 @@ public class PermissionServiceImpl implements PermissionService {
 
             PermissionWithEmployeeDto dto = new PermissionWithEmployeeDto(
                     permission.getId(),
-                    permission.getEmployeeId(),
+                    permission.getEmail(),
                     existEmployee.getFirstName(),
                     existEmployee.getLastName(),
-                    existEmployee.getEmail(),
                     existEmployee.getDepartment(),
                     permission.getDescription(),
                     permission.getNumberOfDays(),
@@ -114,14 +112,14 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Page<PermissionWithEmployeeDto> getPermissionsForEmployee(UUID employeeId, Pageable pageable) {
-        Page<Permission> existPermissions = permissionRepository.findAllByEmployeeId(employeeId, pageable);
+    public Page<PermissionWithEmployeeDto> getPermissionsForEmployee(String email, Pageable pageable) {
+        Page<Permission> existPermissions = permissionRepository.findAllByEmail(email, pageable);
 
         if(existPermissions.isEmpty()) {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.PERMISSION_NOT_FOUND_FOR_EMPLOYEE);
         }
 
-        Optional<Employee> responseEmployee = employeeRepository.findById(employeeId);
+        Optional<Employee> responseEmployee = employeeRepository.findByEmail(email);
 
         if(responseEmployee.isEmpty()) {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.DEFAULT_ERROR_MESSAGE);
@@ -133,10 +131,9 @@ public class PermissionServiceImpl implements PermissionService {
         for (Permission permission : existPermissions) {
             PermissionWithEmployeeDto dto = new PermissionWithEmployeeDto(
                     permission.getId(),
-                    permission.getEmployeeId(),
+                    permission.getEmail(),
                     existEmployee.getFirstName(),
                     existEmployee.getLastName(),
-                    existEmployee.getEmail(),
                     existEmployee.getDepartment(),
                     permission.getDescription(),
                     permission.getNumberOfDays(),
@@ -160,9 +157,9 @@ public class PermissionServiceImpl implements PermissionService {
 
         Permission existPermission = responsePermission.get();
 
-        if(!existPermission.getEmployeeId().equals(permissionUpdateDto.employeeId())) {
-            Optional<Employee> responseWrongEmployee = employeeRepository.findById(existPermission.getEmployeeId());
-            Optional<Employee> responseTrueEmployee = employeeRepository.findById(permissionUpdateDto.employeeId());
+        if(!existPermission.getEmail().equals(permissionUpdateDto.email())) {
+            Optional<Employee> responseWrongEmployee = employeeRepository.findByEmail(existPermission.getEmail());
+            Optional<Employee> responseTrueEmployee = employeeRepository.findByEmail(permissionUpdateDto.email());
 
             if(responseWrongEmployee.isEmpty() || responseTrueEmployee.isEmpty()) {
                 throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMPLOYEE_NOT_FOUND);
@@ -192,7 +189,7 @@ public class PermissionServiceImpl implements PermissionService {
 
         }
         else {
-            Optional<Employee> responseEmployee = employeeRepository.findById(existPermission.getEmployeeId());
+            Optional<Employee> responseEmployee = employeeRepository.findByEmail(existPermission.getEmail());
 
             if(responseEmployee.isEmpty()) {
                 throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMPLOYEE_NOT_FOUND);
@@ -231,14 +228,16 @@ public class PermissionServiceImpl implements PermissionService {
 
         Permission existPermission = responsePermission.get();
 
-        permissionRepository.delete(existPermission);
-        Optional<Employee> responseEmployee = employeeRepository.findById(existPermission.getEmployeeId());
+        Optional<Employee> responseEmployee = employeeRepository.findByEmail(existPermission.getEmail());
 
         if(responseEmployee.isEmpty()) {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMPLOYEE_NOT_FOUND);
         }
 
         Employee existEmployee = responseEmployee.get();
+
+        permissionRepository.delete(existPermission);
+
         existEmployee.setLeaveBalance(existEmployee.getLeaveBalance() + existPermission.getNumberOfDays());
         employeeRepository.save(existEmployee);
 
@@ -246,20 +245,21 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Boolean deletePermissionsForEmployee(UUID employeeId) {
+    public Boolean deletePermissionsForEmployee(String email) {
 
-        List<Permission> existPermissions = permissionRepository.findByEmployeeId(employeeId);
+        List<Permission> existPermissions = permissionRepository.findByEmail(email);
 
         if(existPermissions.isEmpty()) {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.PERMISSION_NOT_FOUND_FOR_EMPLOYEE);
         }
 
-        permissionRepository.deleteAll(existPermissions);
-        Optional<Employee> responseEmployee = employeeRepository.findById(employeeId);
+        Optional<Employee> responseEmployee = employeeRepository.findByEmail(email);
 
         if(responseEmployee.isEmpty()) {
             throw PermissionException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.EMPLOYEE_NOT_FOUND);
         }
+
+        permissionRepository.deleteAll(existPermissions);
 
         Employee existEmployee = responseEmployee.get();
         existEmployee.setLeaveBalance(15);

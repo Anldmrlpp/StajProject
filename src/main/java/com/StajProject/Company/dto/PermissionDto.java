@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public record PermissionDto(
         UUID id,
-        UUID employeeId,
+        String email,
         String description,
         int numberOfDays,
         LocalDate startDate,

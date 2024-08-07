@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -37,8 +36,8 @@ public class PermissionController implements PermissionApi {
     }
 
     @Override
-    public ResponseEntity<Page<PermissionWithEmployeeDto>> getPermissionsForEmployee(UUID employeeId, Pageable pageable) {
-        return ResponseEntity.ok(permissionService.getPermissionsForEmployee(employeeId, pageable));
+    public ResponseEntity<Page<PermissionWithEmployeeDto>> getPermissionsForEmployee(String email, Pageable pageable) {
+        return ResponseEntity.ok(permissionService.getPermissionsForEmployee(email, pageable));
     }
 
     @Override
@@ -52,8 +51,8 @@ public class PermissionController implements PermissionApi {
     }
 
     @Override
-    public ResponseEntity<Boolean> deletePermissionsForEmployee(UUID employeeId) {
-        return ResponseEntity.ok(permissionService.deletePermissionsForEmployee(employeeId));
+    public ResponseEntity<Boolean> deletePermissionsForEmployee(String email) {
+        return ResponseEntity.ok(permissionService.deletePermissionsForEmployee(email));
     }
 
 }

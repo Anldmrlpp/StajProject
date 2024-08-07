@@ -74,8 +74,8 @@ public interface PermissionApi {
             @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @GetMapping(value = "/get/employee/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Page<PermissionWithEmployeeDto>> getPermissionsForEmployee(@PathVariable UUID employeeId, Pageable pageable);
+    @GetMapping(value = "/get/employee/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Page<PermissionWithEmployeeDto>> getPermissionsForEmployee(@PathVariable String email, Pageable pageable);
 
     @Operation(operationId = "updatePermission", summary = "Update permission.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = PermissionDto.class))),
@@ -111,7 +111,6 @@ public interface PermissionApi {
             @ApiResponse(responseCode = "405", description = "Method Not Allowed", content = @Content(schema = @Schema(implementation = Error.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Error.class)))
     })
-    @DeleteMapping(value = "/delete/employee/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Boolean> deletePermissionsForEmployee(@PathVariable UUID employeeId);
-
+    @DeleteMapping(value = "/delete/employee/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Boolean> deletePermissionsForEmployee(@PathVariable String email);
 }

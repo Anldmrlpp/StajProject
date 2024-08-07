@@ -18,8 +18,8 @@ public class Permission {
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "employee_id")
-    private UUID employeeId;
+    @Column(name = "email")
+    private String email;
     @Column(name = "description")
     private String description;
     @Column(name = "number_of_days")

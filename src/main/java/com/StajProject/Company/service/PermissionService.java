@@ -14,9 +14,8 @@ public interface PermissionService {
     PermissionDto addPermission(PermissionCreateDto permissionCreateDto);
     PermissionDto getPermission(UUID id);
     Page<PermissionWithEmployeeDto> getPermissions(Pageable pageable);
-    Page<PermissionWithEmployeeDto> getPermissionsForEmployee(UUID employeeId, Pageable pageable);
+    Page<PermissionWithEmployeeDto> getPermissionsForEmployee(String  email, Pageable pageable);
     PermissionDto updatePermission(UUID id, PermissionUpdateDto permissionUpdateDto);
     Boolean deletePermission(UUID id);
-    Boolean deletePermissionsForEmployee(UUID employeeId);
-
+    Boolean deletePermissionsForEmployee(String email);
 }
